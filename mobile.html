@@ -626,7 +626,6 @@ const Footer = ({ navigate }) => (
 
 /* PROJECT CARD */
 const ProjectCard = ({ project }) => {
-  const hasEmbed = !!project.embedUrl;
   const ytId = (() => {
     const src = project.embedUrl || project.youtubeUrl || &quot;&quot;;
     const m = src.match(/(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
@@ -634,48 +633,34 @@ const ProjectCard = ({ project }) => {
   })();
   const thumb = ytId ? `https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg` : null;
   const externalUrl = project.youtubeUrl || project.frameioUrl || project.link;
-  const isFile = typeof window !== &quot;undefined&quot; &amp;&amp; window.location.protocol === &quot;file:&quot;;
 
   return (
     <div className=&quot;filter-card group block&quot;>
       <div className=&quot;relative overflow-hidden bg-ink-850&quot;>
-        {hasEmbed &amp;&amp; !isFile ? (
-          <div className=&quot;relative w-full aspect-[16/9] bg-ink-850&quot;>
-            <iframe
-              src={(project.embedUrl || &quot;&quot;).replace(&quot;youtube.com/embed&quot;, &quot;youtube-nocookie.com/embed&quot;)}
-              title={project.title}
-              className=&quot;absolute inset-0 w-full h-full&quot;
-              frameBorder=&quot;0&quot;
-              allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&quot;
-              referrerPolicy=&quot;strict-origin-when-cross-origin&quot;
-              allowFullScreen />
-          </div>
-        ) : (
-          <a
-            href={externalUrl || &quot;#&quot;}
-            target={externalUrl ? &quot;_blank&quot; : undefined}
-            rel={externalUrl ? &quot;noopener noreferrer&quot; : undefined}
-            className=&quot;block relative w-full aspect-[16/9] overflow-hidden&quot;
-            onClick={(e) => { if (!externalUrl) e.preventDefault(); }}>
-            {thumb ? (
-              <div
-                className=&quot;absolute inset-0 bg-center bg-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04] grayscale-[20%] group-hover:grayscale-0&quot;
-                style={{ backgroundImage: `url(${thumb})` }} />
-            ) : (
-              <div className=&quot;absolute inset-0 placeholder-grain&quot; />
-            )}
-            <div className=&quot;absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent&quot; />
-            <div className=&quot;absolute inset-0 bg-ink-950/55 opacity-0 group-hover:opacity-100 transition-opacity duration-500&quot; />
-            <div className=&quot;absolute inset-0 flex flex-col justify-end p-5 md:p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0&quot;>
-              <div className=&quot;text-[0.6rem] uppercase font-mono text-white/60&quot; style={{ letterSpacing: &quot;0.22em&quot; }}>
-                {project.categoryLabel} · {project.year}
-              </div>
-              <div className=&quot;mt-2 text-white text-xl md:text-2xl font-semibold leading-tight&quot; style={{ letterSpacing: &quot;-0.005em&quot; }}>
-                {project.title}
-              </div>
+        <a
+          href={externalUrl || &quot;#&quot;}
+          target={externalUrl ? &quot;_blank&quot; : undefined}
+          rel={externalUrl ? &quot;noopener noreferrer&quot; : undefined}
+          className=&quot;block relative w-full aspect-[16/9] overflow-hidden&quot;
+          onClick={(e) => { if (!externalUrl) e.preventDefault(); }}>
+          {thumb ? (
+            <div
+              className=&quot;absolute inset-0 bg-center bg-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04] grayscale-[20%] group-hover:grayscale-0&quot;
+              style={{ backgroundImage: `url(${thumb})` }} />
+          ) : (
+            <div className=&quot;absolute inset-0 placeholder-grain&quot; />
+          )}
+          <div className=&quot;absolute inset-0 bg-gradient-to-t from-ink-950/40 via-transparent to-transparent&quot; />
+          <div className=&quot;absolute inset-0 bg-ink-950/55 opacity-0 group-hover:opacity-100 transition-opacity duration-500&quot; />
+          <div className=&quot;absolute inset-0 flex flex-col justify-end p-5 md:p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0&quot;>
+            <div className=&quot;text-[0.6rem] uppercase font-mono text-white/60&quot; style={{ letterSpacing: &quot;0.22em&quot; }}>
+              {project.categoryLabel} · {project.year}
             </div>
-          </a>
-        )}
+            <div className=&quot;mt-2 text-white text-xl md:text-2xl font-semibold leading-tight&quot; style={{ letterSpacing: &quot;-0.005em&quot; }}>
+              {project.title}
+            </div>
+          </div>
+        </a>
       </div>
       <div className=&quot;mt-4 flex items-baseline justify-between gap-4&quot;>
         <h3 className=&quot;text-[0.95rem] font-medium text-white&quot; style={{ letterSpacing: &quot;0.005em&quot; }}>
